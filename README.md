@@ -1,4 +1,3 @@
-<pre><code>
 # docker_data_science
 
 Basic setup to experiment with spark and a notebook.
