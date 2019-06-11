@@ -33,4 +33,12 @@ services:
       - "8888:8888"
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
-  
+  local_repository:
+    image: sonatype/nexus3
+    container_name: local_repository
+    depends_on:
+      - jupyter-notebook
+    ports:
+      - "6503:8081"
+    volumes:
+      - /home/thibault/Documents/docker_data_science/docker_volume/nexus-data:/nexus-data  
