@@ -13,8 +13,6 @@ services:
     container_name: spark-worker-1
     depends_on:
       - spark-master
-    ports:
-      - "8081:8081"
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
   spark-worker-2:
@@ -24,21 +22,20 @@ services:
       - spark-master
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
+  localrepository:
+    image: sonatype/nexus3
+    container_name: localrepository
+    ports:
+      - "8081:8081"
   jupyter-notebook:
     image: thibault/all-spark-notebook
     container_name: jupyter-notebook
     depends_on:
       - spark-master
+      - localrepository
     ports:
       - "8888:8888"
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
-  local_repository:
-    image: sonatype/nexus3
-    container_name: local_repository
-    depends_on:
-      - jupyter-notebook
-    ports:
-      - "6503:8081"
-    volumes:
-      - /home/thibault/Documents/docker_data_science/docker_volume/nexus-data:/nexus-data  
+#    volumes:
+#       - /home/thibault/Documents/docker_data_science/docker_volume/nexus-data:/nexus-data  
